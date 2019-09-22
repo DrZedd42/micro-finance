@@ -34,14 +34,14 @@
     "absolutePath": "chainlink/node_modules/link_token/contracts/token/ERC677Receiver.sol",
     "exportedSymbols": {
       "ERC677Receiver": [
-        1965
+        2517
       ]
     },
-    "id": 1966,
+    "id": 2518,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1955,
+        "id": 2507,
         "literals": [
           "solidity",
           "^",
@@ -49,7 +49,7 @@
           ".8"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:16"
+        "src": "0:23:18"
       },
       {
         "baseContracts": [],
@@ -57,9 +57,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1965,
+        "id": 2517,
         "linearizedBaseContracts": [
-          1965
+          2517
         ],
         "name": "ERC677Receiver",
         "nodeType": "ContractDefinition",
@@ -67,7 +67,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1964,
+            "id": 2516,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -75,16 +75,16 @@
             "name": "onTokenTransfer",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1962,
+              "id": 2514,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1957,
+                  "id": 2509,
                   "name": "_sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1964,
-                  "src": "79:15:16",
+                  "scope": 2516,
+                  "src": "79:15:18",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -92,10 +92,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1956,
+                    "id": 2508,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "79:7:16",
+                    "src": "79:7:18",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -106,11 +106,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 1959,
+                  "id": 2511,
                   "name": "_value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1964,
-                  "src": "96:11:16",
+                  "scope": 2516,
+                  "src": "96:11:18",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -118,10 +118,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1958,
+                    "id": 2510,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "96:4:16",
+                    "src": "96:4:18",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -132,11 +132,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 1961,
+                  "id": 2513,
                   "name": "_data",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1964,
-                  "src": "109:11:16",
+                  "scope": 2516,
+                  "src": "109:11:18",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -144,10 +144,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 1960,
+                    "id": 2512,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "109:5:16",
+                    "src": "109:5:18",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -157,40 +157,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "78:43:16"
+              "src": "78:43:18"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1963,
+              "id": 2515,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "121:0:16"
+              "src": "121:0:18"
             },
-            "scope": 1965,
-            "src": "54:68:16",
+            "scope": 2517,
+            "src": "54:68:18",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1966,
-        "src": "26:98:16"
+        "scope": 2518,
+        "src": "26:98:18"
       }
     ],
-    "src": "0:125:16"
+    "src": "0:125:18"
   },
   "legacyAST": {
     "absolutePath": "chainlink/node_modules/link_token/contracts/token/ERC677Receiver.sol",
     "exportedSymbols": {
       "ERC677Receiver": [
-        1965
+        2517
       ]
     },
-    "id": 1966,
+    "id": 2518,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1955,
+        "id": 2507,
         "literals": [
           "solidity",
           "^",
@@ -198,7 +198,7 @@
           ".8"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:16"
+        "src": "0:23:18"
       },
       {
         "baseContracts": [],
@@ -206,9 +206,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1965,
+        "id": 2517,
         "linearizedBaseContracts": [
-          1965
+          2517
         ],
         "name": "ERC677Receiver",
         "nodeType": "ContractDefinition",
@@ -216,7 +216,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 1964,
+            "id": 2516,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -224,16 +224,16 @@
             "name": "onTokenTransfer",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1962,
+              "id": 2514,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1957,
+                  "id": 2509,
                   "name": "_sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1964,
-                  "src": "79:15:16",
+                  "scope": 2516,
+                  "src": "79:15:18",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -241,10 +241,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 1956,
+                    "id": 2508,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "79:7:16",
+                    "src": "79:7:18",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -255,11 +255,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 1959,
+                  "id": 2511,
                   "name": "_value",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1964,
-                  "src": "96:11:16",
+                  "scope": 2516,
+                  "src": "96:11:18",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -267,10 +267,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1958,
+                    "id": 2510,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "96:4:16",
+                    "src": "96:4:18",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -281,11 +281,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 1961,
+                  "id": 2513,
                   "name": "_data",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1964,
-                  "src": "109:11:16",
+                  "scope": 2516,
+                  "src": "109:11:18",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -293,10 +293,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 1960,
+                    "id": 2512,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "109:5:16",
+                    "src": "109:5:18",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -306,27 +306,27 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "78:43:16"
+              "src": "78:43:18"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1963,
+              "id": 2515,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "121:0:16"
+              "src": "121:0:18"
             },
-            "scope": 1965,
-            "src": "54:68:16",
+            "scope": 2517,
+            "src": "54:68:18",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1966,
-        "src": "26:98:16"
+        "scope": 2518,
+        "src": "26:98:18"
       }
     ],
-    "src": "0:125:16"
+    "src": "0:125:18"
   },
   "compiler": {
     "name": "solc",
@@ -334,7 +334,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-09-21T08:58:00.847Z",
+  "updatedAt": "2019-09-22T07:39:29.350Z",
   "devdoc": {
     "methods": {}
   },
