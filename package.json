@@ -3,6 +3,7 @@
   "version": "0.6.0",
   "description": "A Chainlink example in a Truffle box",
   "scripts": {
+    "client": "cd client && npm run start",
     "compile": "npx truffle compile",
     "console:dev": "npx truffle console --network cldev",
     "console:live": "npx truffle console --network live",
