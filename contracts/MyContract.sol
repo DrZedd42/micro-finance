@@ -105,4 +105,14 @@ contract MyContract is ChainlinkClient, Ownable {
   {
     cancelChainlinkRequest(_requestId, _payment, _callbackFunctionId, _expiration);
   }
+
+
+
+  /**
+   * @dev testFunc is just for test function
+   */ 
+  function testFunc() public returns (bool) {
+      return true;
+  }
+  
 }

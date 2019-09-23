@@ -9,10 +9,6 @@ import { zeppelinSolidityHotLoaderOptions } from '../config/webpack';
 import styles from './App.module.scss';
 
 
-import ethPriceContract from '../../contracts/oracle/EthPrice.sol';
-import { waitForEvent } from '../../test/1_test_utils.js';
-
-
 
 class App extends Component {
   constructor(props) {    
@@ -38,26 +34,10 @@ class App extends Component {
   ///////--------------------- Functions of testFunc ---------------------------  
   getTestData = async () => {
 
-    const { accounts, cz_exchange, eth_price, abi, address, web3 } = this.state;
+    const { accounts, my_contract, web3 } = this.state;
 
-    const { events: websocketsEvents } = new web3.eth.Contract(
-      abi,
-      address
-    )
-
-    const response_1 = await cz_exchange.methods.testFunc().send({ from: accounts[0] })
+    const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
     console.log('=== response of testFunc function ===', response_1);      // Debug
-
-    const callProvableAndWaitForResult = _ => 
-      eth_price.methods.fetchEthPriceViaProvable()
-        .send({ from: accounts[0], value: 1e17})
-        .then(_ => waitForEvent(websocketsEvents.LogNewEthPrice))
-
-    await callProvableAndWaitForResult()
-
-    const resultFromContract = await eth_price.methods.ethPriceCents().call()
-    console.log('=== response of fetchEthPriceViaProvable function ===', resultFromContract);    
-
   }
 
 
@@ -79,12 +59,10 @@ class App extends Component {
   componentDidMount = async () => {
     const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
  
-    let CzExchange = {};
-    let EthPrice = {};
+    let MyContract = {};
 
     try {
-      CzExchange = require("../../build/contracts/CzExchange.json");              // Load ABI of contract of CzExchange
-      EthPrice = require("../../build/contracts/EthPrice.json");  // Load ABI of contract of EthPrice
+      MyContract = require("../../build/contracts/MyContract.json");  // Load ABI of contract of MyContract
     } catch (e) {
       console.log(e);
     }
@@ -112,39 +90,29 @@ class App extends Component {
         balance = web3.utils.fromWei(balance, 'ether');
 
         let instanceCzExchange = null;
-        let instanceEthPrice = null;
+        let instanceMyContract = null;
         let deployedNetwork = null;
 
         // Create instance of contracts
-        if (CzExchange.networks) {
-          deployedNetwork = CzExchange.networks[networkId.toString()];
+        if (MyContract.networks) {
+          deployedNetwork = MyContract.networks[networkId.toString()];
           if (deployedNetwork) {
-            instanceCzExchange = new web3.eth.Contract(
-              CzExchange.abi,
+            instanceMyContract = new web3.eth.Contract(
+              MyContract.abi,
               deployedNetwork && deployedNetwork.address,
             );
-            console.log('=== instanceCzExchange ===', instanceCzExchange);
-          }
-        }
-        if (EthPrice.networks) {
-          deployedNetwork = EthPrice.networks[networkId.toString()];
-          if (deployedNetwork) {
-            instanceEthPrice = new web3.eth.Contract(
-              EthPrice.abi,
-              deployedNetwork && deployedNetwork.address,
-            );
-            console.log('=== instanceEthPrice ===', instanceEthPrice);
+            console.log('=== instanceMyContract ===', instanceMyContract);
           }
         }
 
-        if (instanceCzExchange || instanceEthPrice) {
+        if (instanceMyContract) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, cz_exchange: instanceCzExchange, eth_price: instanceEthPrice, abi: EthPrice.abi, address: deployedNetwork.address }, () => {
-              this.refreshValues(instanceCzExchange, instanceEthPrice);
+            isMetaMask, my_contract: instanceMyContract }, () => {
+              this.refreshValues(instanceCzExchange, instanceMyContract);
               setInterval(() => {
-                this.refreshValues(instanceCzExchange, instanceEthPrice);
+                this.refreshValues(instanceCzExchange, instanceMyContract);
               }, 5000);
             });
         }
@@ -167,12 +135,9 @@ class App extends Component {
     }
   }
 
-  refreshValues = (instanceCzExchange, instanceEthPrice) => {
-    if (instanceCzExchange) {
-      console.log('refreshValues of instanceCzExchange');
-    }
-    if (instanceEthPrice) {
-      console.log('refreshValues of instanceEthPrice');
+  refreshValues = (instanceMyContract) => {
+    if (instanceMyContract) {
+      console.log('refreshValues of instanceMyContract');
     }
   }
 
@@ -212,13 +177,13 @@ class App extends Component {
     return (
       <div className={styles.wrapper}>
       {!this.state.web3 && this.renderLoader()}
-      {this.state.web3 && !this.state.cz_exchange && (
-        this.renderDeployCheck('cz_exchange')
+      {this.state.web3 && !this.state.my_contract && (
+        this.renderDeployCheck('my_contract')
       )}
-      {this.state.web3 && this.state.cz_exchange && (
+      {this.state.web3 && this.state.my_contract && (
         <div className={styles.contracts}>
 
-          <h2>Boston Proof Oracler</h2>
+          <h2>#Defi donation automatically by using compound and chainlink</h2>
 
           <div className={styles.widgets}>
             <Card width={'30%'} bg="primary">

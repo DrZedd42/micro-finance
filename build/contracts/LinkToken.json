@@ -3889,10 +3889,16 @@
       "links": {},
       "address": "0x3ED305D84982fdf62DC484ddcEc88F4fB6648b91",
       "transactionHash": "0x2b42064c9bd0a9f384b5f69efaadad7172c68860e56afe4bc1bde14bb5ddb131"
+    },
+    "1569221381511": {
+      "events": {},
+      "links": {},
+      "address": "0x004418787651A854c03D743dfc5Ff43420d6F7B4",
+      "transactionHash": "0x31d9bebbf34369996d5d3168839471e1be5aaa8a60e442be137f5516e913d3e3"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-09-22T07:54:54.298Z",
+  "updatedAt": "2019-09-23T07:18:11.555Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {
