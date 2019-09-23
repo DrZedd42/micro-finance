@@ -42,6 +42,21 @@ class App extends Component {
 
     const response_2 = await my_contract.methods.getChainlinkToken().call()
     console.log('=== response of getChainlinkToken function ===', response_2);  // Debug：Success
+
+    const _oracle = '0x67613e33412f07280ff9ef63cbe78b3225a5db6c'
+    const _jobId = '0x241ac766eb7cab2f509d4655182a1b1486040db9bb6be3e973f2c4a9e3f08598'
+    const _payment = 100
+    const _url = 'https://api.kraken.com/0/public/Ticker?pair=ETHUSD'
+    const _path = 'https://api.kraken.com/0/public/Ticker?pair=ETHUSD'
+    const _times = 11111
+
+    const response_3 = await my_contract.methods.createRequestTo(_oracle,
+                                                                  _jobId,
+                                                                  _payment,
+                                                                  _url,
+                                                                  _path,
+                                                                  _times).send({ from: accounts[0] })
+    console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
   }
 
 
