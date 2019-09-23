@@ -37,7 +37,11 @@ class App extends Component {
     const { accounts, my_contract, web3 } = this.state;
 
     const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
-    console.log('=== response of testFunc function ===', response_1);      // Debug
+    console.log('=== response of testFunc function ===', response_1);           // Debug：Success
+
+
+    const response_2 = await my_contract.methods.getChainlinkToken().call()
+    console.log('=== response of getChainlinkToken function ===', response_2);  // Debug：Success
   }
 
 
