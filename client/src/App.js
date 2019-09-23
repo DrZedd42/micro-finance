@@ -43,15 +43,17 @@ class App extends Component {
     const response_2 = await my_contract.methods.getChainlinkToken().call()
     console.log('=== response of getChainlinkToken function ===', response_2);  // Debug：Success
 
-    const _oracle = '0x67613e33412f07280ff9ef63cbe78b3225a5db6c'
-    const _jobId = '0x241ac766eb7cab2f509d4655182a1b1486040db9bb6be3e973f2c4a9e3f08598'
-    const _payment = 100
-    const _url = 'https://api.kraken.com/0/public/Ticker?pair=ETHUSD'
-    const _path = 'https://api.kraken.com/0/public/Ticker?pair=ETHUSD'
-    const _times = 11111
+
+    // The sample data whch reference from ./scripts/read-contract.js
+    const _oracle = '0xc99B3D447826532722E41bc36e644ba3479E4365'
+    const _jobId = '9f0406209cf64acda32636018b33de11'
+    const _payment = '1000000000000000000'
+    const _url = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD'
+    const _path = 'USD'
+    const _times = '100'
 
     const response_3 = await my_contract.methods.createRequestTo(_oracle,
-                                                                  _jobId,
+                                                                  web3.utils.toHex(_jobId),
                                                                   _payment,
                                                                   _url,
                                                                   _path,
