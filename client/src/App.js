@@ -34,7 +34,13 @@ class App extends Component {
   ///////--------------------- Functions of testFunc ---------------------------  
   getTestData = async () => {
 
-    const { accounts, my_contract, web3 } = this.state;
+    const { accounts, MyContract, my_contract, web3, abi, address } = this.state;
+
+    const { events: websocketsEvents } = new web3.eth.Contract(
+      abi,
+      address
+    )
+
 
     const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
     console.log('=== response of testFunc function ===', response_1);           // Debug：Success
@@ -43,20 +49,57 @@ class App extends Component {
     const response_2 = await my_contract.methods.getChainlinkToken().call()
     console.log('=== response of getChainlinkToken function ===', response_2);  // Debug：Success
 
-    const _oracle = '0x67613e33412f07280ff9ef63cbe78b3225a5db6c'
-    const _jobId = '0x241ac766eb7cab2f509d4655182a1b1486040db9bb6be3e973f2c4a9e3f08598'
-    const _payment = 100
-    const _url = 'https://api.kraken.com/0/public/Ticker?pair=ETHUSD'
-    const _path = 'https://api.kraken.com/0/public/Ticker?pair=ETHUSD'
-    const _times = 11111
 
-    const response_3 = await my_contract.methods.createRequestTo(_oracle,
-                                                                  _jobId,
-                                                                  _payment,
-                                                                  _url,
-                                                                  _path,
-                                                                  _times).send({ from: accounts[0] })
-    console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
+    // The sample data whch reference from ./scripts/read-contract.js
+    const oracleAddress = '0xc99B3D447826532722E41bc36e644ba3479E4365'
+    const jobId = '9f0406209cf64acda32636018b33de11'
+    const payment = '1000000000000000000'
+    const url = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD'
+    const path = 'USD'
+    const times = '100'
+
+    // const callProvableAndWaitForResult = async callback => {
+    //   //const mc = await MyContract.deployed()
+    //   console.log('==== Creating request on contract ====', address)
+    //   console.log('==== web3.utils.toHex(jobId) ====', web3.utils.toHex(jobId))
+
+    //   const tx = await my_contract.methods.createRequestTo(
+    //     oracleAddress,
+    //     web3.utils.toHex(jobId),
+    //     payment,
+    //     url,
+    //     path,
+    //     times,
+    //   ).send({ from: accounts[0] })
+    //   console.log('==== tx ====', tx); 
+    //   callback(tx.tx)
+    // }
+
+    const callProvableAndWaitForResult = async callback => {
+      const mc = await MyContract.deployed()
+      console.log('==== Creating request on contract ====', address)
+      console.log('==== web3.utils.toHex(jobId) ====', web3.utils.toHex(jobId))
+      
+      const tx = await mc.createRequestTo(
+        oracleAddress,
+        web3.utils.toHex(jobId),
+        payment,
+        url,
+        path,
+        times,
+      )
+      callback(tx.tx)
+    }
+
+    await callProvableAndWaitForResult()
+
+    // const response_3 = await my_contract.methods.createRequestTo(oracleAddress,
+    //                                                              web3.utils.toHex(jobId),
+    //                                                              payment,
+    //                                                              url,
+    //                                                              path,
+    //                                                              times).send({ from: accounts[0] })
+    // console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
   }
 
 
@@ -128,7 +171,7 @@ class App extends Component {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, my_contract: instanceMyContract }, () => {
+            isMetaMask, MyContract: MyContract, my_contract: instanceMyContract, abi: MyContract.abi, address: deployedNetwork.address }, () => {
               this.refreshValues(instanceCzExchange, instanceMyContract);
               setInterval(() => {
                 this.refreshValues(instanceCzExchange, instanceMyContract);
