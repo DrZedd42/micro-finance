@@ -4,7 +4,7 @@
   "description": "A Chainlink example in a Truffle box",
   "scripts": {
     "client": "cd client && npm run start",
-    "console"： "truffle console --network cldev",
+    "console": "truffle console --network cldev",
     "compile": "npx truffle compile",
     "console:dev": "npx truffle console --network cldev",
     "console:live": "npx truffle console --network live",
