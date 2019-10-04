@@ -8,6 +8,7 @@ import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image } f
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack';
 import styles from './App.module.scss';
 
+//import contract from "@truffle/contract";
 
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
       /////// Default state
       storageValue: 0,
       web3: null,
+      provider: null,
       accounts: null,
       route: window.location.pathname.replace("/", ""),
     };
@@ -31,16 +33,13 @@ class App extends Component {
 
 
 
+
+
+
   ///////--------------------- Functions of testFunc ---------------------------  
   getTestData = async () => {
 
-    const { accounts, MyContract, my_contract, web3, abi, address } = this.state;
-
-    const { events: websocketsEvents } = new web3.eth.Contract(
-      abi,
-      address
-    )
-
+    const { accounts, web3, MyContract, my_contract, abi, address } = this.state;
 
     const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
     console.log('=== response of testFunc function ===', response_1);           // Debug：Success
@@ -76,10 +75,25 @@ class App extends Component {
     // }
 
     const callProvableAndWaitForResult = async callback => {
-      const mc = await MyContract.deployed()
+      
+      var provider = new Web3.providers.HttpProvider("http://localhost:7545");
+      var contract = require("@truffle/contract");
+      var TruffleContract = contract({
+        abi: abi,
+        address: address
+      })
+      TruffleContract.setProvider(provider);
+
+      var deployed = await TruffleContract.deployed();
+      console.log('===  deployed ===', deployed); 
+
+
+
+      const mc = await TruffleContract.deployed()
+      //const mc = await MyContract.deployed()
       console.log('==== Creating request on contract ====', address)
       console.log('==== web3.utils.toHex(jobId) ====', web3.utils.toHex(jobId))
-      
+
       const tx = await mc.createRequestTo(
         oracleAddress,
         web3.utils.toHex(jobId),
