@@ -85,7 +85,7 @@ class App extends Component {
       TruffleContract.setProvider(provider);
 
       var deployed = await TruffleContract.deployed();
-      console.log('===  deployed ===', deployed); 
+      console.log('=== deployed ===', deployed); 
 
 
 

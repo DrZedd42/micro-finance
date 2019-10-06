@@ -1,5 +1,7 @@
 const MyContract = artifacts.require('MyContract')
 
+/* Ropsten test-network */
+
 /*
   This script allows for a Chainlink request to be created from
   the requesting contract. Defaults to the Chainlink oracle address

@@ -1,5 +1,10 @@
 const HDWalletProvider = require('truffle-hdwallet-provider')
 
+require('dotenv').config();
+
+//const MNEMONIC = process.env.MNENOMIC;
+const INFURA_API_KEY = process.env.INFURA_API_KEY;
+
 module.exports = {
   networks: {
     cldev: {
@@ -10,7 +15,8 @@ module.exports = {
     },
     live: {  // Ropsten
       provider: () => {
-        return new HDWalletProvider(process.env.MNEMONIC, process.env.RPC_URL)
+        return new HDWalletProvider("Put your MNEMONIC to here", process.env.RPC_URL)
+        //return new HDWalletProvider(process.env.MNEMONIC, process.env.RPC_URL)
       },
       network_id: '*',
       // Necessary due to https://github.com/trufflesuite/truffle/issues/1971
