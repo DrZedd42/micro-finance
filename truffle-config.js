@@ -15,8 +15,8 @@ module.exports = {
     },
     live: {  // Ropsten
       provider: () => {
-        return new HDWalletProvider("Put your MNEMONIC to here", process.env.RPC_URL)
-        //return new HDWalletProvider(process.env.MNEMONIC, process.env.RPC_URL)
+        //return new HDWalletProvider("Put your MNEMONIC to here", process.env.RPC_URL)
+        return new HDWalletProvider(process.env.MNEMONIC, process.env.RPC_URL)
       },
       network_id: '*',
       // Necessary due to https://github.com/trufflesuite/truffle/issues/1971
