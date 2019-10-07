@@ -24,7 +24,8 @@ module.exports = {
       skipDryRun: true,
       //gas:  3000000,
       //gasPrice: 4500000000,
-      from: "0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3"   // @dev If we want to change owner address of deploy, we need to specify the prefer account address at here. 
+      from: process.env.DEPLOY_ADDRESS
+      //from: "0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3"   // @dev If we want to change owner address of deploy, we need to specify the prefer account address at here. 
     },
   },
   compilers: {
