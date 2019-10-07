@@ -15,6 +15,9 @@ module.exports = async callback => {
   const tokenAddress = await mc.getChainlinkToken()
   const token = await LinkToken.at(tokenAddress)
   console.log(`============ Funding contract: ${mc.address} ============`)
+
   const tx = await token.transfer(mc.address, payment)
+  console.log(`============ tx: ${tx} ============`)
+  
   callback(tx.tx)
 }
