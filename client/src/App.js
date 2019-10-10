@@ -39,11 +39,15 @@ class App extends Component {
   ///////--------------------- Functions of testFunc ---------------------------  
   getTestData = async () => {
 
-    const { accounts, web3, MyContract, my_contract, abi, address } = this.state;
+    const { accounts, web3, MyContract, my_contract, c_ether, abi, address } = this.state;
+
 
     const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
     console.log('=== response of testFunc function ===', response_1);           // Debug：Success
 
+    const cToken = c_ether.at("0x42a628e0c5F3767930097B34b08dCF77e78e4F2B");
+    const response_compound = await cToken.methods.mint().send({from: accounts[0], value: 50});
+    console.log('=== response of response_compound function ===', response_2);  // Debug：Success    
 
     const response_2 = await my_contract.methods.getChainlinkToken().call()
     console.log('=== response of getChainlinkToken function ===', response_2);  // Debug：Success
@@ -57,63 +61,13 @@ class App extends Component {
     const path = 'USD'
     const times = '100'
 
-    // const callProvableAndWaitForResult = async callback => {
-    //   //const mc = await MyContract.deployed()
-    //   console.log('==== Creating request on contract ====', address)
-    //   console.log('==== web3.utils.toHex(jobId) ====', web3.utils.toHex(jobId))
-
-    //   const tx = await my_contract.methods.createRequestTo(
-    //     oracleAddress,
-    //     web3.utils.toHex(jobId),
-    //     payment,
-    //     url,
-    //     path,
-    //     times,
-    //   ).send({ from: accounts[0] })
-    //   console.log('==== tx ====', tx); 
-    //   callback(tx.tx)
-    // }
-
-    const callProvableAndWaitForResult = async callback => {
-      
-      var provider = new Web3.providers.HttpProvider("http://localhost:7545");
-      var contract = require("@truffle/contract");
-      var TruffleContract = contract({
-        abi: abi,
-        address: address
-      })
-      TruffleContract.setProvider(provider);
-
-      var deployed = await TruffleContract.deployed();
-      console.log('=== deployed ===', deployed); 
-
-
-
-      const mc = await TruffleContract.deployed()
-      //const mc = await MyContract.deployed()
-      console.log('==== Creating request on contract ====', address)
-      console.log('==== web3.utils.toHex(jobId) ====', web3.utils.toHex(jobId))
-
-      const tx = await mc.createRequestTo(
-        oracleAddress,
-        web3.utils.toHex(jobId),
-        payment,
-        url,
-        path,
-        times,
-      )
-      callback(tx.tx)
-    }
-
-    await callProvableAndWaitForResult()
-
-    // const response_3 = await my_contract.methods.createRequestTo(oracleAddress,
-    //                                                              web3.utils.toHex(jobId),
-    //                                                              payment,
-    //                                                              url,
-    //                                                              path,
-    //                                                              times).send({ from: accounts[0] })
-    // console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
+    const response_3 = await my_contract.methods.createRequestTo(oracleAddress,
+                                                                 web3.utils.toHex(jobId),
+                                                                 payment,
+                                                                 url,
+                                                                 path,
+                                                                 times).send({ from: accounts[0] })
+    console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
   }
 
 
@@ -136,9 +90,11 @@ class App extends Component {
     const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
  
     let MyContract = {};
+    let CEther = {};
 
     try {
       MyContract = require("../../build/contracts/MyContract.json");  // Load ABI of contract of MyContract
+      CEther = require("../../compound/networks/ropsten/deployedFile/ropsten.json");  // Load ABI of contract of CEther
     } catch (e) {
       console.log(e);
     }
@@ -165,8 +121,8 @@ class App extends Component {
         let balance = accounts.length > 0 ? await web3.eth.getBalance(accounts[0]): web3.utils.toWei('0');
         balance = web3.utils.fromWei(balance, 'ether');
 
-        let instanceCzExchange = null;
         let instanceMyContract = null;
+        let instanceCEther = null;
         let deployedNetwork = null;
 
         // Create instance of contracts
@@ -180,15 +136,25 @@ class App extends Component {
             console.log('=== instanceMyContract ===', instanceMyContract);
           }
         }
+        if (CEther.networks) {
+          deployedNetwork = CEther.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceMyContract = new web3.eth.Contract(
+              CEther.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceCEther ===', instanceCEther);
+          }
+        }
 
         if (instanceMyContract) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, MyContract: MyContract, my_contract: instanceMyContract, abi: MyContract.abi, address: deployedNetwork.address }, () => {
-              this.refreshValues(instanceCzExchange, instanceMyContract);
+            isMetaMask, my_contract: instanceMyContract, c_ether: instanceCEther, abi: MyContract.abi, address: deployedNetwork.address }, () => {
+              this.refreshValues(instanceMyContract, instanceCEther);
               setInterval(() => {
-                this.refreshValues(instanceCzExchange, instanceMyContract);
+                this.refreshValues(instanceMyContract, instanceCEther);
               }, 5000);
             });
         }
@@ -334,7 +300,17 @@ class App extends Component {
 
               <br />
 
-              <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+              <Button size={'small'}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3&receiveToken=DAI&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with DAI
+                </a>
+              </Button>
             </Card>
    
             <Card width={'30%'} bg="primary">
@@ -352,7 +328,17 @@ class App extends Component {
 
               <br />
 
-              <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+              <Button size={'small'}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3&receiveToken=DAI&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with DAI
+                </a>
+              </Button>
             </Card>
 
             <Card width={'30%'} bg="primary">
@@ -370,7 +356,17 @@ class App extends Component {
 
               <br />
 
-              <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+              <Button size={'small'}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3&receiveToken=DAI&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with DAI
+                </a>
+              </Button>
             </Card>
           </div>
 
