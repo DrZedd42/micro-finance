@@ -300,7 +300,17 @@ class App extends Component {
 
               <br />
 
-              <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+              <Button size={'small'}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=ETH&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with tokens
+                </a>
+              </Button>
             </Card>
    
             <Card width={'30%'} bg="primary">
@@ -318,7 +328,17 @@ class App extends Component {
 
               <br />
 
-              <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+              <Button size={'small'}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=ETH&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with tokens
+                </a>
+              </Button>
             </Card>
 
             <Card width={'30%'} bg="primary">
@@ -336,7 +356,17 @@ class App extends Component {
 
               <br />
 
-              <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+              <Button size={'small'}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x63B42a7662538A1dA732488c252433313396eade&receiveToken=ETH&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with tokens
+                </a>
+              </Button>
             </Card>
           </div>
 
