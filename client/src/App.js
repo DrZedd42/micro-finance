@@ -258,6 +258,16 @@ class App extends Component {
       {this.state.web3 && this.state.my_contract && (
         <div className={styles.contracts}>
 
+          <div className={styles.widgets}>
+            <Card style={{ margin:'auto', width:'50%' }} bg="primary">
+              <h4>Create your order of MicroFinace</h4>
+            </Card>
+          </div>
+
+
+          <hr />
+
+
           <h2>Micro finance for farmers in agriculture industory</h2>
 
           <div className={styles.widgets}>

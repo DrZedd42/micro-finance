@@ -115,14 +115,6 @@ contract MyContract is ChainlinkClient, Ownable {
     function testFunc() public returns (bool) {
         return true;
     }
-
-
-    /**
-    * @dev Micro Finance function（Reputation is for collecting Credit Score）
-    */ 
-    function CreditScoreReputation() public returns (bool) {
-        
-    }
     
   
 }
