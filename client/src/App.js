@@ -4,7 +4,7 @@ import Header from "./components/Header/index.js";
 import Footer from "./components/Footer/index.js";
 import Hero from "./components/Hero/index.js";
 import Web3Info from "./components/Web3Info/index.js";
-import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image } from 'rimble-ui';
+import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image, Textarea } from 'rimble-ui';
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack';
 import styles from './App.module.scss';
 
@@ -275,17 +275,26 @@ class App extends Component {
               <h4>Create your order of MicroFinace</h4>
 
               <Form onSubmit={this.handleSubmit}>
-                <Form.Field label="Email" width={1}>
+                <Form.Field label="Title" width={1}>
                   <Form.Input
-                    type="email"
+                    type="text"
                     required
                     width={1}
                     onChange={this.handleValidation}
                   />
                 </Form.Field>
-                <Form.Field validated={this.state.validated} label="Password" width={1}>
+                <Form.Field label="Description" width={1}>
+                  <Textarea 
+                    placeholder="Start typing..."
+                    required
+                    width={1}
+                    rows={4}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field validated={this.state.validated} label="Amount" width={1}>
                   <Form.Input
-                    type="password"
+                    type="text"
                     required
                     width={1}
                     onChange={this.handleValidation}
@@ -293,7 +302,7 @@ class App extends Component {
                 </Form.Field>
                 <Box>
                   <Form.Check
-                    label="Remember me?"
+                    label="Agree?"
                     mb={3}
                     onChange={this.handleValidation}
                   />
