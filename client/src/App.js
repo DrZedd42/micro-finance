@@ -22,16 +22,26 @@ class App extends Component {
       provider: null,
       accounts: null,
       route: window.location.pathname.replace("/", ""),
+
+      /////// Form
+      validated: false
     };
 
     this.getTestData = this.getTestData.bind(this);
 
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
   }
 
+  ///////--------------------- Function of MicroFinance contract ---------------------------  
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({ validated: true });
+  }
 
-  ///////--------------------- Functions of CzExchange ---------------------------
-
-
+  handleValidation(e) {
+    e.target.parentNode.classList.add("was-validated");
+  }
 
 
 
@@ -80,6 +90,8 @@ class App extends Component {
     //                                                              times).send({ from: accounts[0] })
     // console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
   }
+
+
 
 
 
@@ -261,11 +273,40 @@ class App extends Component {
           <div className={styles.widgets}>
             <Card style={{ margin:'auto', width:'50%' }} bg="primary">
               <h4>Create your order of MicroFinace</h4>
+
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Field label="Email" width={1}>
+                  <Form.Input
+                    type="email"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field validated={this.state.validated} label="Password" width={1}>
+                  <Form.Input
+                    type="password"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Box>
+                  <Form.Check
+                    label="Remember me?"
+                    mb={3}
+                    onChange={this.handleValidation}
+                  />
+                </Box>
+                <Button type="submit" width={1}>
+                  Sign Up
+                </Button>
+              </Form>
             </Card>
           </div>
 
 
-          <hr />
+          <span style={{ padding: "50px" }}></span>
 
 
           <h2>Micro finance for farmers in agriculture industory</h2>
