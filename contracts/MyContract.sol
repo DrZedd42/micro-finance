@@ -2,8 +2,7 @@ pragma solidity 0.4.24;
 
 import "chainlink/contracts/ChainlinkClient.sol";
 import "chainlink/node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
-
-import "../compound/contracts/CErc20.sol";
+import "chainlink/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 
 /**
@@ -12,7 +11,10 @@ import "../compound/contracts/CErc20.sol";
  * @dev This contract is designed to work on multiple networks, including
  * local test networks
  */
-contract MyContract is ChainlinkClient, Ownable, CErc20 {
+contract MyContract is ChainlinkClient, Ownable {
+
+    using SafeMath for uint256;
+
     uint256 public data;
 
     /**
@@ -110,22 +112,12 @@ contract MyContract is ChainlinkClient, Ownable, CErc20 {
     }
 
 
-
-
     /**
-    * @dev Compound cToken
-    */ 
-    Erc20 underlying = Erc20(0xB5E5D0F8C0cbA267CD3D7035d6AdC8eBA7Df7Cdd);     // DAI。get a handle for the underlying asset contract
-    CErc20 cToken = CErc20(0x2B536482a01E620eE111747F8334B395a42A555E);       // cDAI。get a handle for the corresponding cToken contract
-    //underlying.approve(address(cToken), 100); // approve the transfer
-
-    /**
-    * @dev testFunc is just for test function
+    * @dev Test Function
     */ 
     function testFunc() public returns (bool) {
         return true;
-
-
     }
+    
   
 }

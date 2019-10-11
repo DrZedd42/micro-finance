@@ -4,7 +4,7 @@ import Header from "./components/Header/index.js";
 import Footer from "./components/Footer/index.js";
 import Hero from "./components/Hero/index.js";
 import Web3Info from "./components/Web3Info/index.js";
-import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image } from 'rimble-ui';
+import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image, Textarea, EthAddress } from 'rimble-ui';
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack';
 import styles from './App.module.scss';
 
@@ -12,7 +12,7 @@ import styles from './App.module.scss';
 
 
 class App extends Component {
-  constructor(props) {    
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -22,16 +22,26 @@ class App extends Component {
       provider: null,
       accounts: null,
       route: window.location.pathname.replace("/", ""),
+
+      /////// Form
+      validated: false
     };
 
     this.getTestData = this.getTestData.bind(this);
 
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
   }
 
+  ///////--------------------- Function of MicroFinance contract ---------------------------  
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({ validated: true });
+  }
 
-  ///////--------------------- Functions of CzExchange ---------------------------
-
-
+  handleValidation(e) {
+    e.target.parentNode.classList.add("was-validated");
+  }
 
 
 
@@ -39,15 +49,15 @@ class App extends Component {
   ///////--------------------- Functions of testFunc ---------------------------  
   getTestData = async () => {
 
-    const { accounts, web3, MyContract, my_contract, c_ether, abi, address } = this.state;
+    const { accounts, web3, MyContract, LinkToken, my_contract, c_ether, abi, address } = this.state;
 
 
     const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
     console.log('=== response of testFunc function ===', response_1);           // Debug：Success
 
-    const cToken = c_ether.at("0x42a628e0c5F3767930097B34b08dCF77e78e4F2B");
-    const response_compound = await cToken.methods.mint().send({from: accounts[0], value: 50});
-    console.log('=== response of response_compound function ===', response_2);  // Debug：Success    
+    // const cToken = c_ether.at("0x42a628e0c5F3767930097B34b08dCF77e78e4F2B");
+    // const response_compound = await cToken.methods.mint().send({from: accounts[0], value: 50});
+    // console.log('=== response of response_compound function ===', response_2);  // Debug：Success    
 
     const response_2 = await my_contract.methods.getChainlinkToken().call()
     console.log('=== response of getChainlinkToken function ===', response_2);  // Debug：Success
@@ -61,14 +71,27 @@ class App extends Component {
     const path = 'USD'
     const times = '100'
 
-    const response_3 = await my_contract.methods.createRequestTo(oracleAddress,
-                                                                 web3.utils.toHex(jobId),
-                                                                 payment,
-                                                                 url,
-                                                                 path,
-                                                                 times).send({ from: accounts[0] })
-    console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
+    const mc = await MyContract.deployed()
+    const tokenAddress = await mc.getChainlinkToken()
+    const token = await LinkToken.at(tokenAddress)
+    console.log(`============ Funding contract: ${mc.address} ============`)
+
+    const tx = await token.transfer(mc.address, payment)
+    console.log(`============ tx: ${tx} ============`)
+    
+    //callback(tx.tx)
+
+
+    // const response_3 = await my_contract.methods.createRequestTo(oracleAddress,
+    //                                                              web3.utils.toHex(jobId),
+    //                                                              payment,
+    //                                                              url,
+    //                                                              path,
+    //                                                              times).send({ from: accounts[0] })
+    // console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
   }
+
+
 
 
 
@@ -90,10 +113,13 @@ class App extends Component {
     const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
  
     let MyContract = {};
+    let LinkToken = {};
     let CEther = {};
 
     try {
       MyContract = require("../../build/contracts/MyContract.json");  // Load ABI of contract of MyContract
+      LinkToken = require("../../build/contracts/LinkToken.json");  // Load ABI of contract of LinkToken
+      console.log('============ LinkToken.abi ============', LinkToken.abi)
       CEther = require("../../compound/networks/ropsten/deployedFile/ropsten.json");  // Load ABI of contract of CEther
     } catch (e) {
       console.log(e);
@@ -122,7 +148,10 @@ class App extends Component {
         balance = web3.utils.fromWei(balance, 'ether');
 
         let instanceMyContract = null;
+        let instanceLinkToken = null;
         let instanceCEther = null;
+        
+        let deployedLinkTokenAddrRopsten = null;
         let deployedNetwork = null;
 
         // Create instance of contracts
@@ -136,6 +165,19 @@ class App extends Component {
             console.log('=== instanceMyContract ===', instanceMyContract);
           }
         }
+        // if (LinkToken.networks) {
+        //   deployedLinkTokenAddrRopsten = "0x20fE562d797A42Dcb3399062AE9546cd06f63280";
+        //   deployedNetwork = LinkToken.networks[networkId.toString()];
+        //   console.log('============ deployedNetwork ============', deployedNetwork)
+        //   if (deployedNetwork) {
+        //     instanceLinkToken = new web3.eth.Contract(
+        //       LinkToken.abi,
+        //       deployedNetwork && deployedNetwork.deployedLinkTokenAddrRopsten,
+        //       //deployedNetwork && deployedNetwork.address,
+        //     );
+        //     console.log('=== instanceLinkToken ===', instanceLinkToken);
+        //   }
+        // }
         if (CEther.networks) {
           deployedNetwork = CEther.networks[networkId.toString()];
           if (deployedNetwork) {
@@ -151,10 +193,10 @@ class App extends Component {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, my_contract: instanceMyContract, c_ether: instanceCEther, abi: MyContract.abi, address: deployedNetwork.address }, () => {
-              this.refreshValues(instanceMyContract, instanceCEther);
+            isMetaMask, my_contract: instanceMyContract, link_token: instanceLinkToken, c_ether: instanceCEther, abi: MyContract.abi, address: deployedNetwork.address }, () => {
+              this.refreshValues(instanceMyContract, instanceLinkToken, instanceCEther);
               setInterval(() => {
-                this.refreshValues(instanceMyContract, instanceCEther);
+                this.refreshValues(instanceMyContract, instanceLinkToken, instanceCEther);
               }, 5000);
             });
         }
@@ -177,9 +219,12 @@ class App extends Component {
     }
   }
 
-  refreshValues = (instanceMyContract) => {
+  refreshValues = (instanceMyContract, instanceLinkToken) => {
     if (instanceMyContract) {
       console.log('refreshValues of instanceMyContract');
+    }
+    if (instanceLinkToken) {
+      console.log('refreshValues of instanceLinkToken');
     }
   }
 
@@ -225,11 +270,67 @@ class App extends Component {
       {this.state.web3 && this.state.my_contract && (
         <div className={styles.contracts}>
 
-          <h2>#Defi donation automatically by using compound and chainlink</h2>
+          <div className={styles.widgets}>
+            <Card style={{ margin:'auto', width:'50%' }} bg="primary">
+              <h4>Create your order of MicroFinance</h4>
+
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Field label="Title" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field label="Description" width={1}>
+                  <Textarea 
+                    placeholder="Start typing..."
+                    required
+                    width={1}
+                    rows={4}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field validated={this.state.validated} label="Desired amount of investment" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field validated={this.state.validated} label="Received Address" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Box>
+                  <Form.Check
+                    label="Agree in terms of rules?"
+                    mb={3}
+                    onChange={this.handleValidation}
+                  />
+                </Box>
+                <Button type="submit" width={1}>
+                  Request investment
+                </Button>
+              </Form>
+            </Card>
+          </div>
+
+
+          <span style={{ padding: "50px" }}></span>
+
+
+          <h2>Micro finance for farmers in agriculture industory</h2>
 
           <div className={styles.widgets}>
             <Card width={'30%'} bg="primary">
-              <h4>Goods #1</h4>
+              <h4>Investment request #1</h4>
 
               <Image
                 alt="random unsplash image"
@@ -247,7 +348,7 @@ class App extends Component {
             </Card>
    
             <Card width={'30%'} bg="primary">
-              <h4>Goods #2</h4>
+              <h4>Investment request #2</h4>
 
               <Image
                 alt="random unsplash image"
@@ -265,7 +366,7 @@ class App extends Component {
             </Card>
 
             <Card width={'30%'} bg="primary">
-              <h4>Goods #3</h4>
+              <h4>Investment request #3</h4>
 
               <Image
                 alt="random unsplash image"
@@ -286,7 +387,7 @@ class App extends Component {
 
           <div className={styles.widgets}>
             <Card width={'30%'} bg="primary">
-              <h4>Goods #4</h4>
+              <h4>Investment request #4</h4>
 
               <Image
                 alt="random unsplash image"
@@ -314,7 +415,7 @@ class App extends Component {
             </Card>
    
             <Card width={'30%'} bg="primary">
-              <h4>Goods #5</h4>
+              <h4>Investment request #5</h4>
 
               <Image
                 alt="random unsplash image"
@@ -342,7 +443,7 @@ class App extends Component {
             </Card>
 
             <Card width={'30%'} bg="primary">
-              <h4>Goods #6</h4>
+              <h4>Investment request #6</h4>
 
               <Image
                 alt="random unsplash image"
