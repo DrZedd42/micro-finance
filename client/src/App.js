@@ -292,7 +292,7 @@ class App extends Component {
                     onChange={this.handleValidation}
                   />
                 </Form.Field>
-                <Form.Field validated={this.state.validated} label="Amount" width={1}>
+                <Form.Field validated={this.state.validated} label="Desired amount of investment" width={1}>
                   <Form.Input
                     type="text"
                     required
