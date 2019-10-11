@@ -4,7 +4,7 @@ import Header from "./components/Header/index.js";
 import Footer from "./components/Footer/index.js";
 import Hero from "./components/Hero/index.js";
 import Web3Info from "./components/Web3Info/index.js";
-import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image, Textarea } from 'rimble-ui';
+import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image, Textarea, EthAddress } from 'rimble-ui';
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack';
 import styles from './App.module.scss';
 
@@ -12,7 +12,7 @@ import styles from './App.module.scss';
 
 
 class App extends Component {
-  constructor(props) {    
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -272,7 +272,7 @@ class App extends Component {
 
           <div className={styles.widgets}>
             <Card style={{ margin:'auto', width:'50%' }} bg="primary">
-              <h4>Create your order of MicroFinace</h4>
+              <h4>Create your order of MicroFinance</h4>
 
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field label="Title" width={1}>
@@ -300,15 +300,23 @@ class App extends Component {
                     onChange={this.handleValidation}
                   />
                 </Form.Field>
+                <Form.Field validated={this.state.validated} label="Received Address" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
                 <Box>
                   <Form.Check
-                    label="Agree?"
+                    label="Agree in terms of rules?"
                     mb={3}
                     onChange={this.handleValidation}
                   />
                 </Box>
                 <Button type="submit" width={1}>
-                  Sign Up
+                  Request investment
                 </Button>
               </Form>
             </Card>
@@ -322,7 +330,7 @@ class App extends Component {
 
           <div className={styles.widgets}>
             <Card width={'30%'} bg="primary">
-              <h4>Goods #1</h4>
+              <h4>Investment request #1</h4>
 
               <Image
                 alt="random unsplash image"
@@ -340,7 +348,7 @@ class App extends Component {
             </Card>
    
             <Card width={'30%'} bg="primary">
-              <h4>Goods #2</h4>
+              <h4>Investment request #2</h4>
 
               <Image
                 alt="random unsplash image"
@@ -358,7 +366,7 @@ class App extends Component {
             </Card>
 
             <Card width={'30%'} bg="primary">
-              <h4>Goods #3</h4>
+              <h4>Investment request #3</h4>
 
               <Image
                 alt="random unsplash image"
@@ -379,7 +387,7 @@ class App extends Component {
 
           <div className={styles.widgets}>
             <Card width={'30%'} bg="primary">
-              <h4>Goods #4</h4>
+              <h4>Investment request #4</h4>
 
               <Image
                 alt="random unsplash image"
@@ -407,7 +415,7 @@ class App extends Component {
             </Card>
    
             <Card width={'30%'} bg="primary">
-              <h4>Goods #5</h4>
+              <h4>Investment request #5</h4>
 
               <Image
                 alt="random unsplash image"
@@ -435,7 +443,7 @@ class App extends Component {
             </Card>
 
             <Card width={'30%'} bg="primary">
-              <h4>Goods #6</h4>
+              <h4>Investment request #6</h4>
 
               <Image
                 alt="random unsplash image"
