@@ -26,7 +26,7 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
     /*
     * @dev Create deal of micro finance
     */
-    function CreateDeal(
+    function createDeal(
         address _farmerAddr, 
         string _title, 
         string _description, 
@@ -50,6 +50,13 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             repayAmount: _repayAmount
         });
         deals.push(deal);
+
+        emit CreateDeal(deal.dealId, 
+                        deal.farmerAddr, 
+                        deal.title, 
+                        deal.description, 
+                        deal.desiredBorrowAmount, 
+                        deal.repayAmount);
 
         return (deal.dealId, 
                 deal.farmerAddr, 
