@@ -49,7 +49,17 @@ class App extends Component {
   ///////--------------------- Functions of testFunc ---------------------------  
   getTestData = async () => {
 
-    const { accounts, web3, MyContract, LinkToken, my_contract, c_ether, abi, address } = this.state;
+    const { accounts, web3, micro_finance, MyContract, LinkToken, my_contract, c_ether, abi, address } = this.state;
+
+    let _farmerAddr = '0x65c666ff3bd301dfc78d8b25f855e02e4556f17d'
+    let _title = 'Test Borrow 1'
+    let _description = 'Test borrow of micro finance'
+    let _desiredBorrowAmount = 100
+    const response_0 = await micro_finance.methods.createDeal(_farmerAddr,
+                                                              _title,
+                                                              _description,
+                                                              _desiredBorrowAmount).send({ from: accounts[0] })
+    console.log('=== response of createDeal function ===', response_0);           // Debug：Success
 
 
     const response_1 = await my_contract.methods.testFunc().send({ from: accounts[0] })
@@ -112,13 +122,15 @@ class App extends Component {
   componentDidMount = async () => {
     const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
  
+    let MicroFinance = {};
     let MyContract = {};
     let LinkToken = {};
     let CEther = {};
 
     try {
+      MicroFinance = require('../../build/contracts/MicroFinance.json');
       MyContract = require("../../build/contracts/MyContract.json");  // Load ABI of contract of MyContract
-      LinkToken = require("../../build/contracts/LinkToken.json");  // Load ABI of contract of LinkToken
+      LinkToken = require("../../build/contracts/LinkToken.json");    // Load ABI of contract of LinkToken
       console.log('============ LinkToken.abi ============', LinkToken.abi)
       CEther = require("../../compound/networks/ropsten/deployedFile/ropsten.json");  // Load ABI of contract of CEther
     } catch (e) {
@@ -147,6 +159,7 @@ class App extends Component {
         let balance = accounts.length > 0 ? await web3.eth.getBalance(accounts[0]): web3.utils.toWei('0');
         balance = web3.utils.fromWei(balance, 'ether');
 
+        let instanceMicroFinance = null;
         let instanceMyContract = null;
         let instanceLinkToken = null;
         let instanceCEther = null;
@@ -155,6 +168,16 @@ class App extends Component {
         let deployedNetwork = null;
 
         // Create instance of contracts
+        if (MicroFinance.networks) {
+          deployedNetwork = MicroFinance.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceMicroFinance = new web3.eth.Contract(
+              MicroFinance.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceMicroFinance ===', instanceMicroFinance);
+          }
+        }
         if (MyContract.networks) {
           deployedNetwork = MyContract.networks[networkId.toString()];
           if (deployedNetwork) {
@@ -193,10 +216,10 @@ class App extends Component {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, my_contract: instanceMyContract, link_token: instanceLinkToken, c_ether: instanceCEther, abi: MyContract.abi, address: deployedNetwork.address }, () => {
+            isMetaMask, micro_finance: instanceMicroFinance, my_contract: instanceMyContract, link_token: instanceLinkToken, c_ether: instanceCEther, abi: MyContract.abi, address: deployedNetwork.address }, () => {
               this.refreshValues(instanceMyContract, instanceLinkToken, instanceCEther);
               setInterval(() => {
-                this.refreshValues(instanceMyContract, instanceLinkToken, instanceCEther);
+                this.refreshValues(instanceMicroFinance, instanceMyContract, instanceLinkToken, instanceCEther);
               }, 5000);
             });
         }
@@ -219,7 +242,10 @@ class App extends Component {
     }
   }
 
-  refreshValues = (instanceMyContract, instanceLinkToken) => {
+  refreshValues = (instanceMicroFinance, instanceMyContract, instanceLinkToken) => {
+    if (instanceMicroFinance) {
+      console.log('refreshValues of instanceMicroFinance');
+    }
     if (instanceMyContract) {
       console.log('refreshValues of instanceMyContract');
     }
