@@ -39,7 +39,7 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
         // Calculate repay amount
         uint256 _repayAmount;
-        _repayAmount = _desiredBorrowAmount.mul(_repayRate);
+        _repayAmount = _desiredBorrowAmount + _desiredBorrowAmount.mul(_repayRate);
         
         Deal memory deal = Deal({
             dealId: _dealId,
