@@ -8,7 +8,8 @@ contract MfObjects {
         address farmerAddr;
         string title;
         string description;
-        uint256 desiredInvestmentAmount;
+        uint256 desiredBorrowAmount;
+        uint256 repayAmount;
     }
 
 
