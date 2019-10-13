@@ -18,7 +18,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
     // Repay rate is 8% which is flat rate.
     uint256 repayRate = 8;
-    uint256 _repayRate = repayRate.div(100);
+    uint256 borrowRate = 100;
+    uint256 _repayRate = borrowRate.add(repayRate);  // assume 1.08%
 
 
     constructor() public {}
@@ -39,14 +40,16 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
         // Calculate repay amount
         uint256 _repayAmount;
+        uint256 _borrowAmount;
         _repayAmount = _desiredBorrowAmount + _desiredBorrowAmount.mul(_repayRate);
+        _borrowAmount = _desiredBorrowAmount.mul(100);
         
         Deal memory deal = Deal({
             dealId: _dealId,
             farmerAddr: _farmerAddr,
             title: _title,
             description: _description,
-            desiredBorrowAmount: _desiredBorrowAmount,
+            desiredBorrowAmount: _borrowAmount,
             repayAmount: _repayAmount
         });
         deals.push(deal);
