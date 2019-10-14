@@ -70,6 +70,18 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
     }
 
 
+    /*
+    * @dev Count deals
+    */ 
+    function getDealsCount() public view returns (uint256 dealsCount) {
+        uint256 _dealsCount;
+        _dealsCount = deals.length;
+        return _dealsCount;
+    }
+    
+
+
+
     /**
     * @dev Micro Finance function（Reputation is for collecting Credit Score）
     */ 
