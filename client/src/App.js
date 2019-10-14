@@ -51,6 +51,10 @@ class App extends Component {
 
     const { accounts, web3, micro_finance, MyContract, LinkToken, my_contract, c_ether, abi, address } = this.state;
 
+    const response_3 = await micro_finance.methods.getDealsCount().call()
+    console.log('=== response of getDealsCount function ===', response_3);
+
+
     let _farmerAddr = '0x65c666ff3bd301dfc78d8b25f855e02e4556f17d'
     let _title = 'Test Borrow 1'
     let _description = 'Test borrow of micro finance'
