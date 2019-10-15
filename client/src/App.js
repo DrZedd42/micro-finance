@@ -137,6 +137,13 @@ class App extends Component {
       LinkToken = require("../../build/contracts/LinkToken.json");    // Load ABI of contract of LinkToken
       console.log('============ LinkToken.abi ============', LinkToken.abi)
       CEther = require("../../compound/networks/ropsten/deployedFile/ropsten.json");  // Load ABI of contract of CEther
+
+      this.setState({ 
+        MicroFinance: MicroFinance, 
+        MyContract: MyContract,
+        LinkToken: LinkToken,
+        CEther: CEther
+      })
     } catch (e) {
       console.log(e);
     }
