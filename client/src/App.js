@@ -8,6 +8,8 @@ import { Loader, Button, Card, Input, Heading, Table, Form, Flex, Box, Image, Te
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack';
 import styles from './App.module.scss';
 
+import axios from 'axios';
+
 //import contract from "@truffle/contract";
 
 
@@ -85,24 +87,29 @@ class App extends Component {
     const path = 'USD'
     const times = '100'
 
-    const mc = await MyContract.deployed()
-    const tokenAddress = await mc.getChainlinkToken()
-    const token = await LinkToken.at(tokenAddress)
-    console.log(`============ Funding contract: ${mc.address} ============`)
+    // const mc = await MyContract.deployed()
+    // const tokenAddress = await mc.getChainlinkToken()
+    // const token = await LinkToken.at(tokenAddress)
+    // console.log(`============ Funding contract: ${mc.address} ============`)
 
-    const tx = await token.transfer(mc.address, payment)
-    console.log(`============ tx: ${tx} ============`)
+    // const tx = await token.transfer(mc.address, payment)
+    // console.log(`============ tx: ${tx} ============`)
     
     //callback(tx.tx)
 
+    const BANCOR_ENDPOINT = 'https://api.bancor.network/0.1/currencies/tokens?limit=1&skip=0&fromCurrencyCode=ETH&includeTotal=false&orderBy=liquidityDepth&sortOrder=desc'
 
-    // const response_3 = await my_contract.methods.createRequestTo(oracleAddress,
-    //                                                              web3.utils.toHex(jobId),
-    //                                                              payment,
-    //                                                              url,
-    //                                                              path,
-    //                                                              times).send({ from: accounts[0] })
-    // console.log('=== response of createRequestTo function ===', response_3);  // Debug：Success
+    const KYBER_ENDPOINT = 'https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3&receiveToken=DAI&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald'
+    const response_5 = await axios.get(BANCOR_ENDPOINT)
+    //const response_5 = await axios.get(KYBER_ENDPOINT)
+    .then((results) => {
+        // 通信に成功してレスポンスが返ってきた時に実行したい処理
+        console.log('=== results ===', results);
+    })
+    .catch((error) => {
+        // 通信に失敗してレスポンスが返ってこなかった時に実行したい処理
+        console.log('=== error ===', error);
+    })
   }
 
 
@@ -382,6 +389,20 @@ class App extends Component {
               <br />
 
               <Button size={'small'} onClick={this.getTestData}>Buy</Button>
+
+              <br />
+
+              <Button size={'small'} onClick={this.getTestData}>
+                <a 
+                  href='https://widget.kyber.network/v0.7.2/?type=pay&mode=popup&lang=en&receiveAddr=0x8Fc9d07b1B9542A71C4ba1702Cd230E160af6EB3&receiveToken=DAI&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald' 
+                  class='kyber-widget-button theme-emerald theme-supported' 
+                  name='KyberWidget - Powered by KyberNetwork' 
+                  title='Pay with tokens'
+                  target='_blank'
+                >
+                 Pay with DAI
+                </a>
+              </Button>
             </Card>
    
             <Card width={'30%'} bg="primary">
