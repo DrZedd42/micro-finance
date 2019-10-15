@@ -9,7 +9,7 @@ import "./MfEvents.sol";
 // shared storage
 contract MfStorage is MfObjects, MfEvents, Ownable {
 
-    Photo[] public photos;
+    Deal[] public deals;
     
 
     mapping (uint => ExampleObject) examples;

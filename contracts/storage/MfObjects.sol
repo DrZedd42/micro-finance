@@ -3,11 +3,13 @@ pragma solidity ^0.4.24;
 
 contract MfObjects {
 
-    struct Photo {
-        uint256 tokenId;
-        address curretOwnerAddr;
-        string ipfsHash;
-        uint256 reputation;
+    struct Deal {
+        uint256 dealId;
+        address farmerAddr;
+        string title;
+        string description;
+        uint256 desiredBorrowAmount;
+        uint256 repayAmount;
     }
 
 
