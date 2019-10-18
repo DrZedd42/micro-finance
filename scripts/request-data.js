@@ -8,15 +8,11 @@ const MyContract = artifacts.require('MyContract')
   on this page: https://docs.chain.link/docs/testnet-oracles
 */
 
-const oracleAddress =
-  process.env.TRUFFLE_CL_BOX_ORACLE_ADDRESS ||
-  '0xc99B3D447826532722E41bc36e644ba3479E4365'
-const jobId =
-  process.env.TRUFFLE_CL_BOX_JOB_ID || '9f0406209cf64acda32636018b33de11'
+const oracleAddress = process.env.TRUFFLE_CL_BOX_ORACLE_ADDRESS || '0xc99B3D447826532722E41bc36e644ba3479E4365'
+const jobId = process.env.TRUFFLE_CL_BOX_JOB_ID || '9f0406209cf64acda32636018b33de11'
 const payment = process.env.TRUFFLE_CL_BOX_PAYMENT || '1000000000000000000'
-const url =
-  process.env.TRUFFLE_CL_BOX_URL ||
-  'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD'
+const url = process.env.TRUFFLE_CL_BOX_URL || 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD'
+//const url = process.env.TRUFFLE_CL_BOX_URL || 'https://api.bancor.network/0.1/currencies/convertiblePairs'  // Using Bancor API
 const path = process.env.TRUFFLE_CL_BOX_JSON_PATH || 'USD'
 const times = process.env.TRUFFLE_CL_BOX_TIMES || '100'
 

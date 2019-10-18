@@ -80,6 +80,46 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
     }
     
 
+    /** 
+     * @dev [Group Lending] automatically by using SmartContract 
+     */
+    function groupLending(
+        uint256 _groupId,
+        address[] _groupMendberAddr,  // Addresses of 5 members
+        string _title,
+        string _description,
+        uint256 _desiredBorrowAmount,
+        uint256 _repayAmount,
+        uint256 _repayDeadline
+    ) 
+        public 
+        returns (uint256, address[]) 
+    {
+        Group memory group = Group({
+            groupId: _groupId,
+            groupMemberAddr: _groupMendberAddr,
+            title: _title, 
+            description: _description,
+            desiredBorrowAmount: _desiredBorrowAmount,
+            repayAmount: _repayAmount,
+            repayDeadline: _repayDeadline,
+        });
+        groups.push(group);
+
+        emit GroupLending(
+            group.groupId,
+            group.groupMemberAddr,
+            group.title,
+            group.description,
+            group.desiredBorrowAmount,
+            group.repayAmount,
+            group.repayDeadline
+        );
+
+        return (group.groupId, group.groupMemberAddr);
+    }
+    
+
 
 
     /**
