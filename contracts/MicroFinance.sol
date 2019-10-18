@@ -93,7 +93,7 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
         uint256 _repayDeadline
     ) 
         public 
-        returns (address[]) 
+        returns (uint256, address[]) 
     {
         Group memory group = Group({
             groupId: _groupId,
@@ -106,7 +106,17 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
         });
         groups.push(group);
 
-        return (group.groupMemberAddr);
+        emit GroupLending(
+            group.groupId,
+            group.groupMemberAddr,
+            group.title,
+            group.description,
+            group.desiredBorrowAmount,
+            group.repayAmount,
+            group.repayDeadline
+        );
+
+        return (group.groupId, group.groupMemberAddr);
     }
     
 
