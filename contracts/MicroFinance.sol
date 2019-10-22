@@ -102,7 +102,7 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             description: _description,
             desiredBorrowAmount: _desiredBorrowAmount,
             repayAmount: _repayAmount,
-            repayDeadline: _repayDeadline,
+            repayDeadline: _repayDeadline
         });
         groups.push(group);
 

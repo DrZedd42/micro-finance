@@ -53,6 +53,29 @@ class App extends Component {
 
     const { accounts, web3, micro_finance, MyContract, LinkToken, my_contract, c_ether, abi, address } = this.state;
 
+    let addr1 = '0x87ae0c1a2cc923c3ae4b15eddda5ba7ca11d68c1'
+    let addr2 = '0x9d7c4f540d3adfab72cace58a102f67bbc4552e0'
+    let addr3 = '0x0522665fa6c0a9128c9e35ddd8d30b1b5119534b'
+    let addr4 = '0x8bb647a1678200fdb8cd695d94b9a5908887f7a4'
+    let addr5 = '0x9fe23ff33c8d59abcff3a10c5a35ac385f604776'
+
+    let _groupId = 1
+    let _groupMendberAddr = [addr1, addr2, addr3, addr4, addr5]  // Addresses of 5 members
+    let _title1 = 'Test Title'
+    let _description1 = 'Test description'
+    let _desiredBorrowAmount1 = 100
+    let _repayAmount = 108
+    let _repayDeadline = 1571726304  // UNIX Timestamp
+    const response_4 = await micro_finance.methods.groupLending(_groupId,
+                                                                _groupMendberAddr,
+                                                                _title1,
+                                                                _description1,
+                                                                _desiredBorrowAmount1,
+                                                                _repayAmount,
+                                                                _repayDeadline).send({ from: accounts[0] })
+
+
+
     const response_3 = await micro_finance.methods.getDealsCount().call()
     console.log('=== response of getDealsCount function ===', response_3);
 
