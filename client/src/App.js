@@ -73,6 +73,10 @@ class App extends Component {
                                                                 _desiredBorrowAmount1,
                                                                 _repayAmount,
                                                                 _repayDeadline).send({ from: accounts[0] })
+    console.log('=== response of groupLending function ===', response_4);
+
+    const response_6 = await micro_finance.methods.getGroupCount().call()
+    console.log('=== response of getGroupCount function ===', response_6);
 
 
 
@@ -327,7 +331,7 @@ class App extends Component {
     );
   }
 
-  renderCzExchange() {
+  renderMicroFinance() {
     return (
       <div className={styles.wrapper}>
       {!this.state.web3 && this.renderLoader()}
@@ -339,7 +343,7 @@ class App extends Component {
 
           <div className={styles.widgets}>
             <Card style={{ margin:'auto', width:'50%' }} bg="primary">
-              <h4>Create your order of MicroFinance</h4>
+              <h4>Create your order of Individual Borrowing of MicroFinance</h4>
 
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field label="Title" width={1}>
@@ -387,11 +391,83 @@ class App extends Component {
                 </Button>
               </Form>
             </Card>
+
+            <Card style={{ margin:'auto', width:'50%' }} bg="primary">
+              <h4>Create your order of Group Borrowing of MicroFinance</h4>
+
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Field label="Title" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field label="Description" width={1}>
+                  <Textarea 
+                    placeholder="Start typing..."
+                    required
+                    width={1}
+                    rows={4}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field validated={this.state.validated} label="Desired amount of investment" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Form.Field validated={this.state.validated} label="Borrower Group Member Address" width={1}>
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                  <Form.Input
+                    type="text"
+                    required
+                    width={1}
+                    onChange={this.handleValidation}
+                  />
+                </Form.Field>
+                <Box>
+                  <Form.Check
+                    label="Agree in terms of rules?"
+                    mb={3}
+                    onChange={this.handleValidation}
+                  />
+                </Box>
+                <Button type="submit" width={1}>
+                  Request investment
+                </Button>
+              </Form>
+            </Card>
           </div>
 
-
           <span style={{ padding: "50px" }}></span>
-
 
           <h2>Micro finance for farmers in agriculture industory</h2>
 
@@ -564,7 +640,7 @@ class App extends Component {
       <div className={styles.App}>
         <Header />
           {this.state.route === '' && this.renderInstructions()}
-          {this.state.route === 'cz_exchange' && this.renderCzExchange()}
+          {this.state.route === 'micro_finance' && this.renderMicroFinance()}
         <Footer />
       </div>
     );

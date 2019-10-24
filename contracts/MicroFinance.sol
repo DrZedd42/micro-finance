@@ -120,6 +120,15 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
     }
     
 
+    /*
+    * @dev Count groupId
+    */ 
+    function getGroupCount() public view returns (uint256 groupsCount) {
+        uint256 _groupsCount;
+        _groupsCount = groups.length;
+        return _groupsCount;
+    }
+
 
 
     /**
