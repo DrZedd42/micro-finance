@@ -75,6 +75,10 @@ class App extends Component {
                                                                 _repayDeadline).send({ from: accounts[0] })
     console.log('=== response of groupLending function ===', response_4);
 
+    const response_6 = await micro_finance.methods.getGroupCount().call()
+    console.log('=== response of getGroupCount function ===', response_6);
+
+
 
     const response_3 = await micro_finance.methods.getDealsCount().call()
     console.log('=== response of getDealsCount function ===', response_3);
@@ -339,7 +343,7 @@ class App extends Component {
 
           <div className={styles.widgets}>
             <Card style={{ margin:'auto', width:'50%' }} bg="primary">
-              <h4>Create your order of individual of MicroFinance</h4>
+              <h4>Create your order of Individual Borrowing of MicroFinance</h4>
 
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field label="Title" width={1}>
