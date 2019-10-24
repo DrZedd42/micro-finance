@@ -132,8 +132,10 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
 
     /**
-    * @dev Micro Finance function（Reputation is for collecting Credit Score）
+    * @dev Micro Finance function（Reputation is for collecting Credit Score）    
     */ 
-    function CreditScoreReputation() public returns (bool) {}
+    function CreditScoreReputation(uint256 _repayCount) public returns (bool) {
+        // in progress
+    }
 
 }
