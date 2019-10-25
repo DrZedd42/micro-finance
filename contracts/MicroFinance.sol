@@ -137,14 +137,20 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
     /**
     * @dev Credit Score (of individual) function which is measured by repaid count
-    * @notice In case of group borrowing, it use total credit score  
     */ 
-    function getCreditScore(uint256 _individualId) public returns (uint256 repaidCount) {
+    function getCreditScore(address _individualAddr) public returns (uint256 repaidCount) {
         uint256 _repaidCount;
-        Individual memory individual = individuals[_individualId];
+        Individual memory individual = individuals[_individualAddr];
         _repaidCount = individual.repaidCount;
         return _repaidCount;
     }
 
+    /**
+    * @dev In case of group borrowing, it use group member's total repaid count as credit score  
+    */ 
+    function getCreditScoreOfGroup(address[] _groupMendberAddr) public returns (uint256 repaidCount) {
+        
+    }
+    
 
 }
