@@ -50,7 +50,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             title: _title,
             description: _description,
             desiredBorrowAmount: _borrowAmount,
-            repayAmount: _repayAmount
+            repayAmount: _repayAmount,
+            repayFinish: false
         });
         deals.push(deal);
 
@@ -59,7 +60,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
                         deal.title, 
                         deal.description, 
                         deal.desiredBorrowAmount, 
-                        deal.repayAmount);
+                        deal.repayAmount,
+                        deal.repayFinish);
 
         return (deal.dealId, 
                 deal.farmerAddr, 
@@ -102,7 +104,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             description: _description,
             desiredBorrowAmount: _desiredBorrowAmount,
             repayAmount: _repayAmount,
-            repayDeadline: _repayDeadline
+            repayDeadline: _repayDeadline,
+            repayFinish: false
         });
         groups.push(group);
 
@@ -113,7 +116,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             group.description,
             group.desiredBorrowAmount,
             group.repayAmount,
-            group.repayDeadline
+            group.repayDeadline,
+            group.repayFinish
         );
 
         return (group.groupId, group.groupMemberAddr);

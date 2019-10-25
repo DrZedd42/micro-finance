@@ -10,6 +10,7 @@ contract MfObjects {
         string description;
         uint256 desiredBorrowAmount;
         uint256 repayAmount;
+        bool repayFinish;
     }
 
 
@@ -21,6 +22,7 @@ contract MfObjects {
         uint256 desiredBorrowAmount;
         uint256 repayAmount;
         uint256 repayDeadline;
+        bool repayFinish;
     }
 
 
