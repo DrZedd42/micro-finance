@@ -26,6 +26,14 @@ contract MfObjects {
     }
 
 
+    struct Individual {
+        uint256 individualId;
+        address addr;
+        uint256 repaidCount;  // That works as Credit Score
+    }
+    
+
+
     struct ExampleObject {
         uint exampleId;
         string exampleName;

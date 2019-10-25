@@ -136,10 +136,15 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
 
     /**
-    * @dev Micro Finance function（Reputation is for collecting Credit Score）    
+    * @dev Credit Score (of individual) function which is measured by repaid count
+    * @notice In case of group borrowing, it use total credit score  
     */ 
-    function CreditScoreReputation(uint256 _repayCount) public returns (bool) {
-        // in progress
+    function getCreditScore(uint256 _individualId) public returns (uint256 repaidCount) {
+        uint256 _repaidCount;
+        Individual memory individual = individuals[_individualId];
+        _repaidCount = individual.repaidCount;
+        return _repaidCount;
     }
+
 
 }
