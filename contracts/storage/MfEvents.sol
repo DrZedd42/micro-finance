@@ -9,7 +9,8 @@ contract MfEvents {
         string title,
         string description,
         uint256 desiredBorrowAmount,
-        uint256 repayAmount
+        uint256 repayAmount,
+        bool repayFinish
     );
 
     event GroupLending (
@@ -19,7 +20,9 @@ contract MfEvents {
         string description,
         uint256 desiredBorrowAmount,
         uint256 repayAmount,
-        uint256 repayDeadline 
+        uint256 repayDeadline,
+        bool repayFinish,
+        uint256 repaidCountTotal
     );
     
 

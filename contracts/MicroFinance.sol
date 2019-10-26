@@ -50,7 +50,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             title: _title,
             description: _description,
             desiredBorrowAmount: _borrowAmount,
-            repayAmount: _repayAmount
+            repayAmount: _repayAmount,
+            repayFinish: false
         });
         deals.push(deal);
 
@@ -59,7 +60,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
                         deal.title, 
                         deal.description, 
                         deal.desiredBorrowAmount, 
-                        deal.repayAmount);
+                        deal.repayAmount,
+                        deal.repayFinish);
 
         return (deal.dealId, 
                 deal.farmerAddr, 
@@ -95,6 +97,11 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
         public 
         returns (uint256, address[]) 
     {
+        // Calculate credit score of group
+        uint256 _groupCreditScore;
+        _groupCreditScore = getCreditScoreOfGroup(_groupId);
+
+        // Save to storage
         Group memory group = Group({
             groupId: _groupId,
             groupMemberAddr: _groupMendberAddr,
@@ -102,7 +109,9 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             description: _description,
             desiredBorrowAmount: _desiredBorrowAmount,
             repayAmount: _repayAmount,
-            repayDeadline: _repayDeadline
+            repayDeadline: _repayDeadline,
+            repayFinish: false,
+            repaidCountTotal: _groupCreditScore
         });
         groups.push(group);
 
@@ -113,7 +122,9 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             group.description,
             group.desiredBorrowAmount,
             group.repayAmount,
-            group.repayDeadline
+            group.repayDeadline,
+            group.repayFinish,
+            group.repaidCountTotal
         );
 
         return (group.groupId, group.groupMemberAddr);
@@ -132,8 +143,37 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
 
 
     /**
-    * @dev Micro Finance function（Reputation is for collecting Credit Score）
+    * @dev Credit Score (of individual) function which is measured by repaid count
     */ 
-    function CreditScoreReputation() public returns (bool) {}
+    function getCreditScore(address _individualAddr) public returns (uint256 repaidCount) {
+        uint256 _repaidCount;
+        Individual memory individual = individuals[_individualAddr];
+        _repaidCount = individual.repaidCount;
+        return _repaidCount;
+    }
+
+    /**
+    * @dev In case of group borrowing, it use group member's total repaid count as credit score  
+    */ 
+    function getCreditScoreOfGroup(uint256 _groupId) public returns (uint256 groupCreditScore) {
+        uint256 _groupCreditScore;
+
+        Group memory group = groups[_groupId];
+
+        for (uint256 i=0; i < group.groupMemberAddr.length; i++) {
+            address _individualAddr;
+            uint256 _repaidCount;
+
+            _individualAddr = group.groupMemberAddr[i];
+
+            Individual memory individual = individuals[_individualAddr];
+            _repaidCount = individual.repaidCount;
+
+            _groupCreditScore.sub(_repaidCount);
+        }
+
+        return _groupCreditScore;  // That is total repaidCount (it works as credit score) of all of group members
+    }
+    
 
 }

@@ -10,6 +10,7 @@ contract MfObjects {
         string description;
         uint256 desiredBorrowAmount;
         uint256 repayAmount;
+        bool repayFinish;
     }
 
 
@@ -21,7 +22,17 @@ contract MfObjects {
         uint256 desiredBorrowAmount;
         uint256 repayAmount;
         uint256 repayDeadline;
+        bool repayFinish;
+        uint256 repaidCountTotal;  // Sum of all of group member's repaidCount
     }
+
+
+    struct Individual {
+        uint256 individualId;
+        address addr;
+        uint256 repaidCount;  // That works as Credit Score
+    }
+    
 
 
     struct ExampleObject {

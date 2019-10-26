@@ -14,6 +14,11 @@ contract MfStorage is MfObjects, MfEvents, Ownable {
     // Assign for info of group lending depend on group
     Group[] public groups;  
 
+    // Indivdual data
+    mapping (address => Individual) individuals;
+    //Individual[] public individuals;
+
+
     mapping (uint => ExampleObject) examples;
 
 }
