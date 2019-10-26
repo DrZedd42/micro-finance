@@ -23,6 +23,7 @@ contract MfObjects {
         uint256 repayAmount;
         uint256 repayDeadline;
         bool repayFinish;
+        uint256 repaidCountTotal;  // Sum of all of group member's repaidCount
     }
 
 

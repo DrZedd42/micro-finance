@@ -21,7 +21,8 @@ contract MfEvents {
         uint256 desiredBorrowAmount,
         uint256 repayAmount,
         uint256 repayDeadline,
-        bool repayFinish
+        bool repayFinish,
+        uint256 repaidCountTotal
     );
     
 

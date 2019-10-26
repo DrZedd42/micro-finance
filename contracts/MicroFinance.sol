@@ -97,6 +97,11 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
         public 
         returns (uint256, address[]) 
     {
+        // Calculate credit score of group
+        uint256 _groupCreditScore;
+        _groupCreditScore = getCreditScoreOfGroup(_groupId);
+
+        // Save to storage
         Group memory group = Group({
             groupId: _groupId,
             groupMemberAddr: _groupMendberAddr,
@@ -105,7 +110,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             desiredBorrowAmount: _desiredBorrowAmount,
             repayAmount: _repayAmount,
             repayDeadline: _repayDeadline,
-            repayFinish: false
+            repayFinish: false,
+            repaidCountTotal: _groupCreditScore
         });
         groups.push(group);
 
@@ -117,7 +123,8 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
             group.desiredBorrowAmount,
             group.repayAmount,
             group.repayDeadline,
-            group.repayFinish
+            group.repayFinish,
+            group.repaidCountTotal
         );
 
         return (group.groupId, group.groupMemberAddr);
