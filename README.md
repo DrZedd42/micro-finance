@@ -1,3 +1,98 @@
+
+# The Micro Finance platform by using smart contract
+
+***
+
+## 【Introduction of The Micro Finance platform by using smart contract】
+- The Micro Finance platform that make come ture micro finance by type of group borrowing / lending by using smart contract.
+（The Micro Finance platform that replace the Grameen Bank's model with smart contract） 
+  - Lender can anytoken to lend and borrower can borrow with DAI which is converted by Kyber payment.
+
+
+&nbsp;
+
+
+
+***
+
+## 【Setup】
+
+### Setup private network by using Ganache
+1. Download Ganache from link below  
+https://www.trufflesuite.com/ganache  
+
+
+2. Execute Ganache   
+
+&nbsp;
+
+
+
+### Setup wallet by using Metamask
+1. Add MetaMask to browser (Chrome or FireFox or Opera or Brave)    
+https://metamask.io/  
+
+
+2. Adjust appropriate newwork below 
+```
+Ropsten Test Network
+
+```
+
+&nbsp;
+
+
+### Setup backend
+1. Deploy contracts to ropsten network
+```
+(root directory)
+
+$ npm run migrate:live
+```
+
+&nbsp;
+
+
+### Setup frontend
+1. Execute command below in root directory.
+```
+
+$ npm run client
+```
+
+2. Access to browser by using link 
+```
+http://127.0.0.1:3000
+```
+
+&nbsp;
+
+***
+
+
+## 【Work flow】
+
+&nbsp;
+
+***
+
+## 【References】
+- Documents
+  - #KyberDefi Hackathon / Resources
+https://kyber.devpost.com/details/resources
+
+- issue
+https://gitcoin.co/issue/makerdao/community/314
+https://challenges.adb.org/en/challenges/agri-fin/teams
+
+
+
+
+
+
+<hr>
+
+
 # Chainlink Truffle Box
 
 Implementation of a [Chainlink requesting contract](https://docs.chain.link/docs/create-a-chainlinked-project).

@@ -141,7 +141,7 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
     /**
      * @dev The condition which count up of credit score
      */ 
-    function CountUpOfCreditScore(uint256 _individualId) public returns (bool) {
+    function countUpOfCreditScore(uint256 _individualId) public returns (bool) {
         Deal memory deal = deals[_dealId];
         Individual memory individual = individuals[_individualId];
 
