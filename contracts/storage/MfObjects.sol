@@ -30,6 +30,12 @@ contract MfObjects {
     struct Individual {
         uint256 individualId;
         address addr;
+        string title;
+        string description;
+        uint256 desiredBorrowAmount;
+        uint256 repayAmount;
+        uint256 repayDeadline;
+        bool repayFinish;
         uint256 repaidCount;  // That works as Credit Score
     }
     
