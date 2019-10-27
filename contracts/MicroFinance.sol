@@ -131,6 +131,27 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
     }
     
 
+
+
+
+
+
+    /******************** Function of credit score below *********************/
+    
+    /**
+     * @dev The condition which count up of credit score
+     */ 
+    function CountUpOfCreditScore(uint256 _individualId) public returns (bool) {
+        Deal memory deal = deals[_dealId];
+        Individual memory individual = individuals[_individualId];
+
+        // [Condition]：If repayAmount of individual is reached to repayAmount of deal, repaidCount of individual is counted up.
+        if (deal.repayAmount == individual.repayAmount) {
+            individual.repaidCount = individual.repaidCount++;
+        }
+    }
+    
+
     /*
     * @dev Count groupId
     */ 
@@ -139,7 +160,6 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
         _groupsCount = groups.length;
         return _groupsCount;
     }
-
 
 
     /**
@@ -151,6 +171,7 @@ contract MicroFinance is Ownable, MfStorage, MfOwnable {
         _repaidCount = individual.repaidCount;
         return _repaidCount;
     }
+
 
     /**
     * @dev In case of group borrowing, it use group member's total repaid count as credit score  
